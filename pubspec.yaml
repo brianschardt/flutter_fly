@@ -1,0 +1,15 @@
+name: eden
+version: 0.0.1
+description: CLI for building cool flutter app
+author: Brian Schardt <brian.ja.schardt@gmail.com>
+homepage: https://github.com
+documentation:
+environment:
+  sdk: ">=1.24.0"
+executables:
+  eden:
+dependencies:
+  args: '>=0.13.3 <0.14.0'
+  ansicolor: '>=0.0.9 <0.1.0'
+  glob: '>=1.1.0 <1.2.0 '
+  await_to_dart:

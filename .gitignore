@@ -1,0 +1,8 @@
+.idea
+.atom
+.packages
+.pub
+build
+**/packages
+**/*~
+.DS_STORE
