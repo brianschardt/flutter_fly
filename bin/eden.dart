@@ -5,7 +5,6 @@ import 'dart:async';
 //import 'package:await_to_dart/index';
 import './file.dart';
 
-String imports = "import 'package:flutter/material.dart';";
 
 main(){
 
@@ -19,12 +18,24 @@ main(){
     "tests"   :actDir+'tests',
   };
 
+
+  bool check = checkIsFlutter(current.path);
+
+  if(!check){
+    print('Error: Not in a flutter project');
+    return;
+  }
+
   createDirectories(dirNames);
   createStyleFiles(dirNames);
   createWidget(dirNames, 'homes/test');
 
 }
 
+bool checkIsFlutter(projectPath){
+  File fileObj = new File(projectPath+'/pubspec.yaml');
+  return fileObj.existsSync();
+}
 
 void createDirectories(Map dirNames){
   dirNames.forEach((key, value) {
@@ -38,7 +49,7 @@ void createDirectories(Map dirNames){
 
 void createStyleFiles(Map dirNames) async {
   String styleFileName = dirNames['styles']+'/default.style.dart';
-  createFile(styleFileName, imports);
+  createFile(styleFileName, getDefaultStyle());
 }
 
 void createFile(String filePath, String contents) async{
@@ -76,19 +87,18 @@ void createWidget(Map dirNames, String widgetName){
 
   String finalWidgetDirName = widgetsDirName+'/'+widgetName;
 
+  List dir_names =  widgetName.split('/');//to get how many directories down
 
-  print(finalWidgetDirName);
+  print(dir_names.length);
   Map widgetFiles = {
-    fileWidgetName+'.widget.dart':'',
-    fileWidgetName+'.style.dart':imports,
-    fileWidgetName+'.view.dart':'',
+    fileWidgetName+'.widget.dart':getStatelessWidgetContents(fileWidgetName),
+    fileWidgetName+'.style.dart' :getStyleContents(dir_names.length),
+    fileWidgetName+'.view.dart'  :getViewContents(fileWidgetName, dir_names.length),
   };
 
   widgetFiles.forEach((key, value){
     String filePath = finalWidgetDirName+'/'+key;
-    print(filePath);
     createFile(filePath, value);
   });
 
-  print(fileWidgetName);
 }
