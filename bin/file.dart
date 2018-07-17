@@ -39,7 +39,6 @@ String getStatelessWidgetContents(WidgetName){
   return
 '''
 ${getWidgetContents(WidgetName)}
-
 class ${cap(WidgetName)} extends StatelessWidget {
 
 
@@ -57,8 +56,7 @@ String getStatefulWidgetContents(WidgetName){
   return
 '''
 ${getWidgetContents(WidgetName)}
-
-class ${CapName} extends StatefullWidget {
+class ${CapName} extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState(){
@@ -85,9 +83,7 @@ ${getDefaultStyleImport(number)}
 import "./${WidgetName}.style.dart";
 
 Widget ${widgetViewBuildName(WidgetName)}(wg){
-  return 
-  
+  return Center(child: Text("${WidgetName} created!"));
 }
 ''';
-
 }

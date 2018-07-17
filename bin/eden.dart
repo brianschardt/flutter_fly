@@ -28,10 +28,13 @@ main(){
 
   createDirectories(dirNames);
   createStyleFiles(dirNames);
-  createWidget(dirNames, 'homes/test');
+  createWidget(dirNames, 'homess', 'stateful');
 
 }
 
+void init(){
+
+}
 bool checkIsFlutter(projectPath){
   File fileObj = new File(projectPath+'/pubspec.yaml');
   return fileObj.existsSync();
@@ -80,7 +83,7 @@ String createDir(String knownDir, String dirName){
   return dir_names[dir_names.length-1];
 }
 
-void createWidget(Map dirNames, String widgetName){
+void createWidget(Map dirNames, String widgetName, String state){
   String widgetsDirName = dirNames['widgets'];
 
   String fileWidgetName = createDir(widgetsDirName, widgetName);
@@ -90,8 +93,18 @@ void createWidget(Map dirNames, String widgetName){
   List dir_names =  widgetName.split('/');//to get how many directories down
 
   print(dir_names.length);
+
+  String widgetContent;
+  if(state == 'stateless'){
+    widgetContent = getStatelessWidgetContents(fileWidgetName);
+  }else if(state == 'stateful'){
+    widgetContent = getStatefulWidgetContents(fileWidgetName);
+  }else{
+    print('Error state unknown');
+    return;
+  }
   Map widgetFiles = {
-    fileWidgetName+'.widget.dart':getStatelessWidgetContents(fileWidgetName),
+    fileWidgetName+'.widget.dart':widgetContent,
     fileWidgetName+'.style.dart' :getStyleContents(dir_names.length),
     fileWidgetName+'.view.dart'  :getViewContents(fileWidgetName, dir_names.length),
   };
