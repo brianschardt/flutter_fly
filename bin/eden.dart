@@ -6,7 +6,7 @@ import 'dart:async';
 import './file.dart';
 
 
-main(){
+main(List<String> arguments){
 
   Directory current = Directory.current;
   String actDir = current.path+'/lib/';
@@ -21,20 +21,93 @@ main(){
 
   bool check = checkIsFlutter(current.path);
 
+  final parser = new ArgParser();
+
+  parser.addOption('init', callback: (mode){
+    init();
+  });
+
+  parser.addOption('generate', callback: (mode){
+    generate(arguments);
+  });
+
+  parser.addOption('gw', callback: (mode){
+    gw(arguments);
+  });
+
+  var results = parser.parse(arguments);
+
   if(!check){
     print('Error: Not in a flutter project');
     return;
   }
 
-  createDirectories(dirNames);
-  createStyleFiles(dirNames);
-  createWidget(dirNames, 'homess', 'stateful');
 
+}
+
+Map<string, string> getDirNames(){
+  Directory current = Directory.current;
+  String actDir = current.path+'/lib/';
+
+  Map<String, String> dirNames = {
+    "services":actDir+'services',
+    "styles"  :actDir+'styles',
+    "widgets" :actDir+'widgets',
+    "tests"   :actDir+'tests',
+  };
+
+  return dirNames;
+}
+void gw(args){
+  if(args.length<2){
+    print('not enough arguments');
+    return;
+  }
+
+  List<string> possibleState = args[0].split(':');
+
+  String state = (possibleState.length<2) ? 'stateless': possibleState[1];
+  print(state);
+}
+
+void generate(args){
+  if(args.length < 3){
+    print('not enough arguments');
+    return;
+  };
+
+  String type = args[1];
+  String name = args[2];
+
+  List<string> typeArray = type.split(':');
+
+  String actualType = typeArray[0];
+  switch(actualType){
+    case 'widget':
+      String state = (typeArray.length<2) ? 'stateless' : typeArray[1];
+      generateWdiget(name, state);
+      break;
+    default:
+      print('type unknown '+actualType);
+      break;
+  }
+}
+
+void generateWdiget(name, state){
+  print('Creating widget named: '+name);
+  Map<string, string> dirNames = getDirNames();
+  createWidget(dirNames, name, state);
 }
 
 void init(){
+  print('Initilizing Project for Eden');
+  Map<string, string> dirNames = getDirNames();
 
+  createDirectories(dirNames);
+  createStyleFiles(dirNames);
+  createWidget(dirNames, 'homess', 'stateful');
 }
+
 bool checkIsFlutter(projectPath){
   File fileObj = new File(projectPath+'/pubspec.yaml');
   return fileObj.existsSync();
@@ -91,8 +164,6 @@ void createWidget(Map dirNames, String widgetName, String state){
   String finalWidgetDirName = widgetsDirName+'/'+widgetName;
 
   List dir_names =  widgetName.split('/');//to get how many directories down
-
-  print(dir_names.length);
 
   String widgetContent;
   if(state == 'stateless'){
