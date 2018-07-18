@@ -23,15 +23,21 @@ main(List<String> arguments){
 
   final parser = new ArgParser();
 
-  parser.addOption('init', callback: (mode){
+  var initCommand = new ArgParser();
+  parser.addCommand('init', initCommand);
+  initCommand.addOption('set', callback: (mode){
     init();
   });
 
-  parser.addOption('generate', callback: (mode){
+  var initGenerate = new ArgParser();
+  parser.addCommand('generate', initGenerate);
+  initGenerate.addOption('set', callback: (mode){
     generate(arguments);
   });
 
-  parser.addOption('gw', callback: (mode){
+  var initGW = new ArgParser();
+  parser.addCommand('gw', initGW);
+  initGW.addOption('set', callback: (mode){
     gw(arguments);
   });
 
@@ -45,7 +51,7 @@ main(List<String> arguments){
 
 }
 
-Map<string, string> getDirNames(){
+Map<String, String>getDirNames(){
   Directory current = Directory.current;
   String actDir = current.path+'/lib/';
 
@@ -64,7 +70,7 @@ void gw(args){
     return;
   }
 
-  List<string> possibleState = args[0].split(':');
+  List<String> possibleState = args[0].split(':');
 
   String state = (possibleState.length<2) ? 'stateless': possibleState[1];
   print(state);
@@ -79,7 +85,7 @@ void generate(args){
   String type = args[1];
   String name = args[2];
 
-  List<string> typeArray = type.split(':');
+  List<String> typeArray = type.split(':');
 
   String actualType = typeArray[0];
   switch(actualType){
@@ -95,17 +101,18 @@ void generate(args){
 
 void generateWdiget(name, state){
   print('Creating widget named: '+name);
-  Map<string, string> dirNames = getDirNames();
+  Map<String, String> dirNames = getDirNames();
   createWidget(dirNames, name, state);
 }
 
 void init(){
-  print('Initilizing Project for Eden');
-  Map<string, string> dirNames = getDirNames();
+  print('Beginning to initilize Project for Eden');
+  Map<String, String> dirNames = getDirNames();
 
   createDirectories(dirNames);
   createStyleFiles(dirNames);
-  createWidget(dirNames, 'homess', 'stateful');
+  createWidget(dirNames, 'homes', 'stateful');
+  print('Done');
 }
 
 bool checkIsFlutter(projectPath){
@@ -138,6 +145,8 @@ void createFile(String filePath, String contents) async{
       print('Error: file not created!');
       print(e);
     }
+  }else{
+    print('Warning! File Already Exists: ${filePath}');
   }
 }
 
@@ -149,7 +158,9 @@ String createDir(String knownDir, String dirName){
     final dir = new Directory(dirCheck);
     if(!dir.existsSync()){
       dir.createSync();
-      print('created directory'+dirCheck);
+      print('created directory ${dirCheck}');
+    }else{
+      print('Warning! Directory Already Exists: ${dirCheck}');
     }
   });
 
