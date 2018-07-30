@@ -2,7 +2,6 @@ import 'package:args/args.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
-//import 'package:await_to_dart/index';
 import './file.dart';
 
 
