@@ -20,7 +20,19 @@ main(List<String> arguments){
 
   bool check = checkIsFlutter(current.path);
 
+  if(arguments.length<1){
+    listOptions();
+  }
+
   final parser = new ArgParser();
+
+
+  var initHelp = new ArgParser();
+  parser.addCommand('help', initHelp);
+  initHelp.addOption('set', callback: (mode){
+    listOptions();
+  });
+
 
   var initCommand = new ArgParser();
   parser.addCommand('init', initCommand);
@@ -62,6 +74,18 @@ Map<String, String>getDirNames(){
   };
 
   return dirNames;
+}
+
+void listOptions(){
+  print('*********************************');
+  print('******** FLY BY FLUTTER *********');
+  print('*********************************');
+  print('OPTIONS:');
+  print('   init                                                   Initilize Project');
+  print('   generate widget:<stateless | stateful> <Widget Name>  Creates Widget');
+  print('    gw:<stateless | stateful> <Widget Name>               Shortcut: Creates Widget');
+  print('   _ _ _');
+  print('   help                                                   Lists Commands');
 }
 void gw(args){
   if(args.length<2){
