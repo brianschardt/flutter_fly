@@ -2,7 +2,7 @@ name: fly
 version: 0.0.2
 description: CLI for building beautiful flutter apps
 author: Brian Schardt <brian.ja.schardt@gmail.com>
-homepage: https://github.com
+homepage: https://github.com/brianalois/flutter_fly
 documentation:
 environment:
   sdk: ">=1.24.0"
