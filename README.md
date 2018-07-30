@@ -1,5 +1,5 @@
-# Eden
-#### Best Flutter Framework for organized and beautiful code
+# Fly
+#### Best Flutter Framework for Beautiful Code and Programming Artisans.
 
 ### Description
 The purpose of this framework is to encourage organized code, and break files up into their proper function.
@@ -33,10 +33,10 @@ widgets
 initilize existing project to work with existing commands
 ```$xslt
 cd to/flutter/project
-eden init
+fly init
 ```
 
-creats directories and files for the eden framework
+creats directories and files for the fly framework
 ```$xslt
 services
 styles
@@ -51,27 +51,27 @@ widgets
 ## Generate Widget
 Create an additional widget. By default this will create a stateless widget
 ```$xslt
-eden generate widget login
+fly generate widget login
 ```
 
 **or**
 ### Create a Sateless Widget
 ```$xslt
-eden generate widget:stateless login
+fly generate widget:stateless login
 ```
 **Shortcut!**
 
 **gw**: stands for "generate widget", this helps reduce time it takes to type out the full thing.
 ```$xslt
-eden gw:stateless login
+fly gw:stateless login
 ```
 ### Create a Sateful Widget
 ```$xslt
-eden generate widget:stateful login
+fly generate widget:stateful login
 ```
 **Shortcut!**
 ```$xslt
-eden gw:stateful login
+fly gw:stateful login
 ```
 
 

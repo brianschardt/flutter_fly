@@ -72,4 +72,4 @@ packages:
     source: hosted
     version: "1.0.2"
 sdks:
-  dart: ">=1.24.0 <=2.0.0-dev.68.0"
+  dart: ">=1.24.0 <=2.0.0-dev.69.1"

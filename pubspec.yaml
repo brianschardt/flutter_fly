@@ -1,13 +1,13 @@
-name: eden
-version: 0.0.1
-description: CLI for building cool flutter app
+name: fly
+version: 0.0.2
+description: CLI for building beautiful flutter apps
 author: Brian Schardt <brian.ja.schardt@gmail.com>
 homepage: https://github.com
 documentation:
 environment:
   sdk: ">=1.24.0"
 executables:
-  eden:
+  fly:
 dependencies:
   args: '>=0.13.3 <0.14.0'
   ansicolor: '>=0.0.9 <0.1.0'
